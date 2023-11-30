@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
-    name { "MyString" }
-    email { "MyString" }
-    password_digest { "MyString" }
+    name { "Test Name" }
+    sequence(:email){|n| "test.n#{n}@ gocomet.com"}
+    password_digest { BCrypt::Password.create("12345") }
   end
 end
