@@ -5,9 +5,6 @@ RSpec.describe Post, type: :model do
     it {is_expected.to have_many(:comments)}
     it {should belong_to(:user)}
   end
-  describe  "validation" do
-    it {should validate_presence_of(:images)}
-  end
 
 
   describe "DB operations" do

@@ -53,3 +53,6 @@ gem "pg", "~> 1.5"
 gem "jwt", "~> 2.7"
 
 gem "bcrypt", "~> 3.1"
+gem "mime-types", "~> 3.5"
+
+gem "securerandom", "~> 0.3.0"
