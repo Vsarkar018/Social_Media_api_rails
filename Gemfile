@@ -56,3 +56,5 @@ gem "bcrypt", "~> 3.1"
 gem "mime-types", "~> 3.5"
 
 gem "securerandom", "~> 0.3.0"
+
+gem "redis"

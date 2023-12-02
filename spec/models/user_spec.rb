@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   describe "associations" do
-    before(:each) do
-      subject { create(:user) }
-    end
+
     it { is_expected.to have_many(:posts) }
     it { is_expected.to have_many(:comments) }
     # it { is_expected.to have_many(:connections).with_foreign_key('follower_id')}

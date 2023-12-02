@@ -4,11 +4,12 @@ FactoryBot.define do
     caption { "Hey this is my first post" }
     images { %w[image_url1 image_url2] }
     # after(:build) do |post|
-    #   post.images.attach(
-    #       Rack::Test::UploadedFile.new(
-    #         Rails.root.join('spec', 'testfiles','example.jpg'), 'image/jpg'
-    #       )
-    #   )
+    #   image = {
+    #     tempfile: File.open(Rails.root.join('spec', 'files', 'example.jpg')),
+    #     filename: 'example.jpg',
+    #     type: 'image/jpg'
+    #   }
+    #   post.images = image
     # end
   end
 end

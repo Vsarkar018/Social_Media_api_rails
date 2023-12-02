@@ -14,6 +14,11 @@ module V1
         raise error
       end
 
+      def follow_user(user_id,other_user)
+        user1 = User.find_by_id(user_id)
+        user1.follow(other_user)
+        user1.following
+      end
     end
   end
 end

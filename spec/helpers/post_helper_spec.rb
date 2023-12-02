@@ -4,8 +4,8 @@ RSpec.describe V1::Helpers::PostHelper, type: :helper do
   before(:each) do
     @post = create(:post)
   end
-  pending "Create Post" do
-    it "returns the post with valid parameters" do
+  describe "Create Post" do
+    pending "returns the post with valid parameters" do
       data = { caption: @post.caption }.to_json
       params = { data: data, images: @post.images }
       expect(described_class.new.create_post(params,@post.user_id)).to change(Post, :count).by(1)

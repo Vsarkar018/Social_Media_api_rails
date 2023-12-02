@@ -21,9 +21,6 @@ module V1
       def get_post(post_id)
         Post.find_by_id(post_id)
       end
-      def get_all_post_of_user(user_id)
-        Post.where(user_id: user_id)
-      end
       def update_post(post_id)
         @post = Post.find_by_id(post_id)
         # image_data = ImageService.get_image_data(post[:images][0])

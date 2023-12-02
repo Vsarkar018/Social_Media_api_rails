@@ -3,7 +3,7 @@ module V1
     version 'v1', using: :path
     format :json
     POST_HELPER = Helpers::PostHelper
-
+    REDIS_CLIENT = Redis.new
     resource :post do
       desc "Create Post"
       params do
@@ -16,16 +16,23 @@ module V1
             status 400
             present error: 'Invalid Image format', images: params[:images]
           end
-        POST_HELPER.new.create_post(params,271)
+        post = POST_HELPER.new.create_post(params,271)
+        REDIS_CLIENT.set("post:#{post.id}",post.to_json)
+        post
       end
 
       desc "Get post"
       get ':id' do
+        post = REDIS_CLIENT.get("post:#{params[:id]}")
+        unless post.blank?
+          present JSON.parse(post)
+        end
         post = POST_HELPER.new.get_post(params[:id])
         if post.blank?
           status 404
-          present error: 'Post not found'
+          present error: "Post Not found"
         end
+        REDIS_CLIENT.set("post:#{params[:id]}",post.to_json)
         post
       end
 
@@ -42,12 +49,23 @@ module V1
       desc "Delete the post"
       delete ':id' do
         POST_HELPER.new.delete_post(params[:id])
+        REDIS_CLIENT.del("post:#{params[:id]}")
       end
 
 
       desc "Get all post"
       get do
-        POST_HELPER.new.get_all_post_of_user(271)
+        posts = REDIS_CLIENT.get("posts:271")
+        unless posts.blank?
+          present JSON.parse(posts)
+        end
+        posts = POST_HELPER.new.get_all_post_of_user(271)
+        if posts.blank?
+          status 404
+          present error: "Posts Not found"
+        end
+        REDIS_CLIENT.set("posts:271",posts.to_json)
+        posts
       end
     end
   end
