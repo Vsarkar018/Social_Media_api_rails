@@ -10,13 +10,13 @@ module V1
       # end
       post do
         user1 = User.find_by_id(1)
-        user2 = User.find_by_id(2)
+        user2 = User.find_by_id(3)
         user1.follow(user2)
         { following: user1.following , followers: user1.followers }
       end
       post '/unfollow' do
         user1 = User.find_by_id(1)
-        user2 = User.find_by_id(2)
+        user2 = User.find_by_id(3)
         user1.unfollow(user2)
         { following: user1.following , followers: user1.followers }
       end
