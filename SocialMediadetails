@@ -1,0 +1,18 @@
+don't need login
+Post api focuess
+only jpg and png
+user name search
+followers and following // many to many association
+email to the followers for post create
+postgres or mongodb
+redis (optional)
+comment architecture (opotinal)
+Create model realtons with each other
+
+
+
+MODELS
+	USER 
+	POST
+	COMMENTS
+	CONNECTIONS
