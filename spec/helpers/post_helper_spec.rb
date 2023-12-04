@@ -34,16 +34,15 @@ RSpec.describe V1::Helpers::PostHelper, type: :helper do
   end
 
   describe "Update Post" do
-    pending "updates a post with valid parameters" do
-      params = { caption: "Updated caption", images: ["new_image_url"] }
-      updated_post = described_class.new.update_post(@post.id, params)
+    it "updates a post with valid parameters" do
+      params = { caption: "Updated caption", id: @post.id }
+      updated_post = described_class.new.update_post(params)
       expect(updated_post).to be_valid
       expect(updated_post.caption).to eq("Updated caption")
-      expect(updated_post.images).to eq(["new_image_url"])
     end
     it "raises an error for invalid parameters" do
-      params = { caption: "", images: "" }
-      expect { described_class.new.update_post(@post.id, params) }.to raise_error(StandardError)
+      params = { caption: "", id: -1}
+      expect { described_class.new.update_post(params) }.to raise_error(StandardError)
     end
   end
 

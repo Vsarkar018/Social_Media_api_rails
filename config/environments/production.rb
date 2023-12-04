@@ -108,6 +108,6 @@ Rails.application.configure do
   # strategy for connection switching and pass that into the middleware through
   # these configuration options.
   # config.active_record.database_selector = { delay: 2.seconds }
-  # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
-  # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  # config.active_record.database_resolver = ActiveRecord::middleware::DatabaseSelector::Resolver
+  # config.active_record.database_resolver_context = ActiveRecord::middleware::DatabaseSelector::Resolver::Session
 end

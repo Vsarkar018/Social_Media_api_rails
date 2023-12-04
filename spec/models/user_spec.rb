@@ -25,30 +25,27 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:password).is_at_least(8) }
     it { should have_secure_password }
     #
-    # it { should have_many(:active_relationships).class_name('Connection').with_foreign_key('follower_id').dependent(:destroy) }
-    # it { should have_many(:passive_relationships).class_name('Connection').with_foreign_key('following_id').dependent(:destroy) }
-    # it { should have_many(:following).through(:passive_relationships).source(:following) }
-    # it { should have_many(:followers).through(:active_relationships).source(:followers) }
-    # before(:each) do
-    #   @other_user = create(:user)
-    #   @user = create(:user)
-    # end
-    # it 'follows and unfollows users' do
-    #       expect(@user.following).not_to include(@other_user)
-    #       byebug
-    #       @user.follow( @other_user )
-    #       byebug
-    #       expect(@user.following).to include( @other_user )
-    #       @user.unfollow( @other_user )
-    #       expect(@user.following).not_to include( @other_user )
-    # end
+    it { should have_many(:this_user).class_name('Connection').with_foreign_key('follower_id').dependent(:destroy) }
+    it { should have_many(:other_user).class_name('Connection').with_foreign_key('following_id').dependent(:destroy) }
+    it { should have_many(:following).through(:this_user).source(:following) }
+    it { should have_many(:followers).through(:other_user).source(:followers) }
+    before(:each) do
+      @other_user = create(:user)
+      @this_user = create(:user)
+    end
+    pending 'follows and unfollows users' do
+          expect(@this_user.following).not_to include(@other_user)
+          @this_user.follow( @other_user )
+          expect(@this_user.following).to include( @other_user )
+          @this_user.unfollow( @other_user )
+          expect(@this_user.following).not_to include( @other_user )
+    end
   end
 
 
   describe "DB operations" do
     before(:each) do
       @user = create(:user)
-      # byebug
     end
     it "returns the user with valid parameters" do
       test_user= described_class.create(name: @user.name , email: "user@gocomet.com" , password: @user.password)

@@ -20,6 +20,7 @@ module V1
         user = AUTH_HELPER.new.signup_user(params)
         # puts "#{user.name}, #{user.email}"
         # token = JwtService.generate_token({user: {user_id:user.id,name:user.name,email:user.email}})
+        # PostNotificationMailer.send_notification(user)
         {user: user   }
       end
 
@@ -29,9 +30,13 @@ module V1
         requires :password, type: String, desc: "Password of the user"
       end
       post :login do
-        user = AUTH_HELPER.new.login_user(params)
-        token = JwtService.generate_token({user: {user_id:user.id,name:user.name,email:params[:email]}})
-        {token:token}
+        AUTH_HELPER.new.login_user(params)
+        # PostNotificationJob.perform_async(JSON.parse(user.to_json))
+
+        # PostNotificationMailer.send_notification(user).deliver_now
+        # token = JwtService.generate_token({user: {user_id:user.id,
+        # name:user.name,email:params[:email]}})
+        # {token:token}
       end
     end
   end

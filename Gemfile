@@ -58,3 +58,7 @@ gem "mime-types", "~> 3.5"
 gem "securerandom", "~> 0.3.0"
 
 gem "redis"
+
+gem 'sendgrid-ruby'
+gem 'sidekiq'
+gem 'sinatra'

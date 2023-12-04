@@ -3,30 +3,39 @@ module V1
     version 'v1' , using: :path
     format :json
 
+    USER_HELPER = V1::Helpers::UserHelper
+
     resources :user do
-      desc "follow a user"
-      # params do
-      #   requires :other_user_id, type: Integer, desc: "user id of the user to be followed"
+      desc "get user data"
+      # get do
+      #   USER_HELPER.new.get_user(params[user_id])
       # end
-      post do
-        user1 = User.find_by_id(1)
-        user2 = User.find_by_id(3)
-        user1.follow(user2)
-        { following: user1.following , followers: user1.followers }
+
+      desc "follow and unfollow a user"
+      post ':other_user_id' do
+        this_user = USER_HELPER.new.get_user(1)
+        other_user = USER_HELPER.new.get_user(params[:other_user_id])
+        if this_user.following.include?(other_user)
+          this_user.unfollow(other_user)
+          status 200
+          present message: "User unfollowed"
+        end
+        this_user.follow(other_user)
+        status 200
+        {message: "user followed"}
       end
-      post '/unfollow' do
-        user1 = User.find_by_id(1)
-        user2 = User.find_by_id(3)
-        user1.unfollow(user2)
-        { following: user1.following , followers: user1.followers }
-      end
+
+      desc "get folllowing of the user"
       get do
-        user1 = User.find_by_id(1)
-        user1.following
+        this_user = USER_HELPER.new.get_user(1)
+        this_user.following
       end
-      delete do
-        User.destroy_by(id:2)
+      desc "get folllowers of the user"
+      get '/followers' do
+        this_user = USER_HELPER.new.get_user(2)
+        this_user.followers
       end
+
     end
   end
 end
