@@ -62,3 +62,5 @@ gem "redis"
 gem 'sendgrid-ruby'
 gem 'sidekiq'
 gem 'sinatra'
+
+gem "mailcatcher"

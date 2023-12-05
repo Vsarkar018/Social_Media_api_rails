@@ -1,6 +1,6 @@
 module V1
   module Helpers
-    class PostHelper
+    module PostHelper
       def create_post(params, user_id)
           data = JSON.parse(params[:data])
           @image_path

@@ -12,14 +12,15 @@
     has_many :followers, through: :other_user, source: :followers # this is for many to many association and also query
     has_many :following, through: :this_user, source: :following  # is done using this association when we call the
                                                                     # user.followers or user.following
-
+    # default_scope { select(column_names - ['password_digest']) }
     def follow(going_to_follow_user)
         connection = this_user.build(following: going_to_follow_user)
         connection.save
     end
 
     def unfollow(following_user)
-        this_user.find_by(following: following_user).destroy
+        connection = this_user.find_by(following_id: following_user.id)
+        connection.destroy if connection
     end
 
   end

@@ -1,19 +1,11 @@
 module V1
   module Helpers
-    class UserHelper
-      class Error < StandardError
-        attr_reader :status
-        def initialize(message,status)
-          super(message)
-          @status = status
-        end
-      end
+    module UserHelper
       def get_user(user_id)
         User.find_by_id(user_id)
-      rescue => error
-        raise error
+      rescue ActiveRecord::RecordInvalid => e
+        raise Error.new("Failed to Fetch Details: #{e.message}", 422)
       end
-
       def follow_user(user_id,other_user)
         user1 = User.find_by_id(user_id)
         user1.follow(other_user)

@@ -8,7 +8,7 @@ default: &default
   database: social_media_db
   adapter: postgresql
   host: 127.0.0.1
-  username: vsarkar
+  username: vsarkar018
   password: 123456
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000

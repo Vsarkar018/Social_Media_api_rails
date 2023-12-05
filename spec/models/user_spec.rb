@@ -33,13 +33,13 @@ RSpec.describe User, type: :model do
       @other_user = create(:user)
       @this_user = create(:user)
     end
-    pending 'follows and unfollows users' do
-          expect(@this_user.following).not_to include(@other_user)
-          @this_user.follow( @other_user )
-          expect(@this_user.following).to include( @other_user )
-          @this_user.unfollow( @other_user )
-          expect(@this_user.following).not_to include( @other_user )
+    it 'follows and unfollows users' do
+      @this_user.follow(@other_user)
+      expect(@this_user.following).to include(@other_user)
+      @this_user.unfollow(@other_user)
+      expect(@this_user.following).not_to include(@other_user)
     end
+
   end
 
 
@@ -49,7 +49,6 @@ RSpec.describe User, type: :model do
     end
     it "returns the user with valid parameters" do
       test_user= described_class.create(name: @user.name , email: "user@gocomet.com" , password: @user.password)
-      # Byebug
       expect(test_user).to be_valid
       expect(test_user.name).to eq(@user.name)
       expect(test_user.email).to eq("user@gocomet.com")
