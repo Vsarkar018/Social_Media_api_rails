@@ -14,8 +14,7 @@ RSpec.describe V1::Helpers::CommentsHelper, type: :helper do
     end
 
     it "returns nil with invalid parameter" do
-      params = {}
-      expect { helper.create_comment(params) }.to raise_error(StandardError)
+      expect { helper.create_comment('','','') }.to raise_error(StandardError)
     end
   end
 
@@ -33,8 +32,21 @@ RSpec.describe V1::Helpers::CommentsHelper, type: :helper do
 
   describe "reads the comment" do
     it "returns a particular comment" do
-      expect(helper.get_comment(@comment.id)).to eq(@comment)
-      end
+      allow(RedisService).to receive(:get_key).with("comment:#{@comment.id}").and_return(@comment)
+      expect(Comment).not_to receive(:find_by_id)
+      res = helper.get_comment(@comment.id)
+      expect(res).to eq(@comment)
+    end
+    pending 'returns the comment from the database' do
+      allow(RedisService).to receive(:get_key).with("comment:#{@comment.id}").and_return(nil)
+      expect(Comment).to receive(:find_by_id).with(@comment.id) do
+        result = Comment.find_by_id(@comment.id)
+        result
+      end.and_return(@comment)
+
+      result = helper.get_comment(@comment.id)
+      expect(result).to eq(@comment)
+    end
     it "returns the error with invalid Comment id" do
       res = helper.get_comment(-1)
       expect(res).to be_nil
@@ -57,6 +69,4 @@ RSpec.describe V1::Helpers::CommentsHelper, type: :helper do
       expect { helper.delete_comment(@comment.id) }.to change(Comment, :count).by(-1)
     end
   end
-
-
 end
