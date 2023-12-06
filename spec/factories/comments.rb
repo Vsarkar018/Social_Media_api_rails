@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :comment do
     association :user
     association :post
-    content { "Looking nice bro" }
+    content {"That is a nice comment" }
   end
 end
