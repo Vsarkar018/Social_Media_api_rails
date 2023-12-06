@@ -36,6 +36,7 @@ module V1
         comments
       end
       def delete_comment(comment_id)
+        RedisService.del_key("comments:#{comment_id}")
         Comment.destroy(comment_id)
       end
     end

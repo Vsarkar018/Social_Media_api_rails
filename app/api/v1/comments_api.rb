@@ -38,6 +38,11 @@ module V1
       end
       get do
         get_all_comments_of_post(params[:post_id])
+        end
+
+      desc "Delete the comment"
+      delete ':id' do
+        delete_comment(params[:id])
       end
     end
   end
